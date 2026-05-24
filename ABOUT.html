@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.DECORS | Final Fixed & Animated</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+   1. GLOBAL VARIABLES & CORE STYLES
+   ========================================================================== */
+        :root {
+            --gold: #c5a059;
+            /* Luxury brand design secondary accent color */
+            /* --dark: #000; */
+            /* Optional black variable token backup */
+        }
+
+        body {
+            font-family: 'Cinzel', serif;
+            /* Premium display font for upscale branding vibe */
+            background: var(--dark);
+            /* Applies the primary dark mode layout backdrop */
+            color: #fff;
+            /* High contrast white text for base readability */
+            margin: 0;
+            /* Resets default browser edge paddings */
+            overflow-x: hidden;
+            /* Prevents broken horizontal scrolling elements */
+        }
+
+        /* ==========================================================================
+   2. CUSTOM MOUSE FOLLOWER (DYNAMIC OVERLAY VIEWPORTS)
+   ========================================================================== */
+        #follower {
+            width: 120px;
+            height: 120px;
+            border: 1px solid #d4af37;
+            /* Gold outline ring structure */
+            border-radius: 50%;
+            /* Perfect geometric circle conversion */
+            position: fixed;
+            /* Sticks static over fixed viewport position coordinates */
+            pointer-events: none;
+            /* CRITICAL: Mouse events pass directly through to background links */
+            display: flex;
+            /* Centers structural content items inside the ring */
+            align-items: center;
+            /* Vertical centering constraint alignment */
+            justify-content: center;
+            /* Horizontal centering constraint alignment */
+            font-size: 0.7rem;
+            color: #d4af37;
+            letter-spacing: 2px;
+            z-index: 9999;
+            /* Keeps cursor ring over all other active viewport elements */
+            /* Custom ease bezier transition configurations for high-end organic elastic response curves */
+            transition: transform 0.15s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease;
+            transform: translate(-50%, -50%);
+            /* Shifts offset to pin cursor exactly in middle of vector box */
+            background: rgba(0, 0, 0, 0.05);
+            /* Very light ambient overlay filler mask */
+            backdrop-filter: blur(1px);
+            /* Modern frosted-glass depth filtering overlay layer */
+            left: -200px;
+            /* Initial setup pushes indicator safe zone out of layout view */
+        }
+
+        /* Default native pointer overrides (Optional structural adjustments configuration setup) */
+        body,
+        a,
+        button {
+            cursor: auto;
+            /* Fallback base settings. Switch to 'none' if absolute custom control needed */
+        }
+
+        /* ==========================================================================
+   3. NAVIGATION HEADER SYSTEM (STRIP DESIGN)
+   ========================================================================== */
+        .navbar {
+            background: rgb(8, 8, 8);
+            /* Deep black background fill for stark menu presentation context */
+            padding: 1.5rem 0;
+            z-index: 2500;
+            /* Layered position stacking rules layout safety parameter */
+        }
+
+        .navbar-brand {
+            font-size: 2rem;
+            color: var(--gold) !important;
+            /* Locks branding element to gold identity tone rule overrides */
+            letter-spacing: 4px;
+            /* Classic serif tracking adjustment presentation style */
+            font-weight: 700;
+        }
+
+        /* Customized Vector SVG code generation injection to force the hamburger icon stroke into clear gold colors */
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28197, 160, 89, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+        }
+
+        .nav-link {
+            color: #fff !important;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin: 0 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            /* Timing config parameters setup for fluid transition frames */
+        }
+
+        /* Smooth micro-interaction transformation elevations on layout hover frames */
+        .nav-link:hover {
+            color: var(--gold) !important;
+            transform: translateY(-2px);
+            /* Elevates navigation menu text upward gently on active focus hover */
+        }
+
+        /* Header utility utility icon grouping layout */
+        .nav-icons a {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-left: 1.5rem;
+            text-decoration: none;
+            display: inline-block;
+            /* Allows layout engines to cleanly calculate standard transformation parameters */
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Snappy high fidelity elastic spring curve mechanics */
+        }
+
+        /* Interactive custom feedback animation targets for interface structural items */
+        .nav-icons a:hover {
+            color: var(--gold);
+            transform: scale(1.3) rotate(5deg);
+            /* Playful scaling pop with slight structural rotational angle alignment */
+        }
+
+        /* ==========================================================================
+   4. LUXURY MEGA MENU FRAMEWORK (TRANSLATIONAL FLUID LAYER EFFECT)
+   ========================================================================== */
+        .mega-menu {
+            position: fixed;
+            top: -110%;
+            /* Standard viewport reset keeps layer tucked out above page frame */
+            left: 0;
+            width: 100%;
+            height: auto;
+            background: rgba(0, 0, 0, 0.98);
+            /* Premium high-opacity overlay base canvas mask */
+            z-index: 2000;
+            padding: 120px 0 60px;
+            transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            /* Ultra-premium architectural slide velocity timing curve */
+            border-bottom: 1px solid var(--gold);
+            visibility: hidden;
+            /* Standard interface interaction layout accessibility guard */
+            opacity: 0;
+        }
+
+        /* Trigger class active states (Interjected dynamically over core JavaScript triggers) */
+        .mega-menu.show-mega {
+            top: 0;
+            /* Transitions top layout tracking baseline onto primary header surface views */
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .menu-title {
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            /* Anchor structural base points to correctly orient custom pseudo-decorations */
+            display: inline-block;
+        }
+
+        /* Accent anchor lines drawn directly beneath catalog grouping text categories */
+        .menu-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .menu-list {
+            list-style: none;
+            /* Strips default structural bullet points */
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .menu-list li {
+            font-family: 'Lora', serif;
+            /* Elegant contrast typography configuration switch for data catalog items */
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 10px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        /* Interactive offset hover animations inside menu blocks */
+        .menu-list li:hover {
+            color: var(--gold);
+            padding-left: 8px;
+            /* Clean horizontal listing push response feedback animation */
+        }
+
+        /* Entry transition setup variables mapped across grid nodes before interaction classes fire */
+        .mega-menu .col-lg-2 {
+            opacity: 0;
+            transform: translateY(30px);
+            /* Keeps text sets baseline-dropped out of position frames inside static states */
+            transition: 0.6s;
+        }
+
+        /* Triggers structural item column entry animation flow when toggle state matches active views */
+        .mega-menu.show-mega .col-lg-2 {
+            opacity: 1;
+            transform: translateY(0);
+            /* Smooth uniform return back to natural grid coordinate systems */
+        }
+
+        /* Sequential column staggered item delay sets creating wave-like visual cascade patterns */
+        .mega-menu.show-mega .col-lg-2:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .mega-menu.show-mega .col-lg-2:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        .mega-menu.show-mega .col-lg-2:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+
+        .mega-menu.show-mega .col-lg-2:nth-child(4) {
+            transition-delay: 0.4s;
+        }
+
+        .mega-menu.show-mega .col-lg-2:nth-child(5) {
+            transition-delay: 0.5s;
+        }
+
+        .mega-menu.show-mega .col-lg-2:nth-child(6) {
+            transition-delay: 0.6s;
+        }
+
+        /* ==========================================================================
+   5. ABOUT PAGE HERO INTROBANNER BLOCK
+   ========================================================================== */
+        .about-page-banner {
+            background-image: url('imag/BANNER CTI.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            /* Activates parallax depth motion simulation frameworks on desktop screen sizes */
+            position: relative;
+            padding: 60px 0;
+            color: #fff;
+        }
+
+        .about-page-banner .banner-overlay {
+            background: rgba(0, 0, 0, 0.6);
+            /* Translucent dark photography optimization layer filter mask */
+            padding: 80px 0;
+        }
+
+        .about-heading {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 400;
+            letter-spacing: 15px;
+            /* Expansive premium presentation title formatting layout rules */
+            text-transform: uppercase;
+            margin: 0;
+            color: #fff;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            /* Enhances title legibility metrics across variable image plates */
+        }
+
+        /* Mobile responsive typography adjustments targets */
+        @media (max-width: 768px) {
+            .about-heading {
+                font-size: 2rem;
+                letter-spacing: 8px;
+            }
+
+            .about-page-banner {
+                background-attachment: scroll;
+                /* Disables standard desktop resource-heavy parallex processing routines for fluid rendering speeds */
+            }
+        }
+
+        /* ==========================================================================
+   6. BRAND DESCRIPTION & INNER STORY BLOCKS
+   ========================================================================== */
+        .about-content {
+            background-color: #fff;
+            /* Sharp high-contrast background transformation switch to bright layouts */
+            padding: 100px 0;
+            color: #000;
+            /* Flips global color typography standards for layout text blocks */
+        }
+
+        .about-text-box {
+            padding-right: 40px;
+            margin: 140px 0px 0px 0px;
+            /* Custom strategic column alignment balancing spacing pushes */
+        }
+
+        .about-text-box h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+
+        .about-text-box p {
+            font-family: 'Lora', serif;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            /* Roomy layout line configurations for premium article flow reading speeds */
+            color: #444;
+            /* Balanced dark gray palette choice minimizes eyes strains on paper white displays */
+            margin-bottom: 20px;
+        }
+
+        .highlight-text {
+            font-weight: 700;
+            /* Heavy weight emphasize inline marker class */
+            color: #000;
+        }
+
+        /* Custom premium Call To Action link vectors buttons configurations */
+        .btn-explore {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 12px 35px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
+            border-radius: 5px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-explore:hover {
+            background-color: var(--gold);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(197, 160, 89, 0.4);
+            /* Colored ambient drop-shadow matching the gold color system */
+        }
+
+        /* Brand framing photography container boxes controls */
+        .about-image-container img {
+            width: 100%;
+            border-radius: 20px;
+            /* Modern curvilinear sleek bounding framework edge layout */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            /* High dispersion volumetric shadow parameters fields */
+            transition: 0.5s;
+        }
+
+        .about-image-container img:hover {
+            transform: scale(1.02);
+            /* Gentle spatial breathing canvas dimensional changes scaling on cursor interactions */
+        }
+
+        @media (max-width: 991px) {
+            .about-text-box {
+                padding-right: 0;
+                text-align: center;
+                /* Re-aligns text nodes context into central points inside compressed view layouts */
+                margin-bottom: 50px;
+            }
+
+            .about-text-box h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* ==========================================================================
+   7. JENSEN SPECIAL DECOR INTRODUCTION SPECIFIC BLOCKS
+   ========================================================================== */
+        .jenson-intro-section {
+            padding: 80px 0;
+            background-color: #ffffff;
+        }
+
+        .intro-img-wrapper img {
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-img-wrapper img:hover {
+            transform: scale(1.02);
+        }
+
+        .intro-content {
+            padding-left: 40px;
+            font-weight: bold;
+        }
+
+        .intro-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .title-underline {
+            width: 150px;
+            height: 3px;
+            background-color: #000;
+            margin: 0 auto 30px auto;
+            /* Perfectly aligns and drops horizontal spacer configurations directly on item centers */
+        }
+
+        .intro-content p {
+            font-family: 'Lora', serif;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 20px;
+            text-align: justify;
+            /* Locks typography structures into straight geometric column blocks across pages */
+        }
+
+        @media (max-width: 991px) {
+            .intro-content {
+                padding-left: 0;
+                margin-top: 30px;
+            }
+
+            .intro-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* ==========================================================================
+   8. INTERACTIVE CALL TO ACTION (CTA) INTERIOR FOOTER MARKS
+   ========================================================================== */
+        .banner-cta {
+            background-image: url('imag/BANNER\ CTI.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            padding: 100px 0;
+            color: #fff;
+        }
+
+        .banner-overlay {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 60px 0;
+        }
+
+        .brand-subtitle {
+            font-size: 1.1rem;
+            font-family: 'Poppins', sans-serif;
+            /* Clean tech geometric sans layout adjustment parameters handles */
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .banner-heading {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            text-transform: capitalize;
+        }
+
+        .btn-shop {
+            display: inline-block;
+            background-color: #000;
+            color: #fff;
+            padding: 15px 40px;
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 5px;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+        }
+
+        /* Interactive focus handling states */
+        .btn-shop:hover {
+            background-color: #c5a059;
+            /* Eye-catching premium purple interactive state transition shift */
+            color: #fff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px #c5a059;
+            border-color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .banner-heading {
+                font-size: 2rem;
+            }
+
+            .banner-cta {
+                background-attachment: scroll;
+            }
+        }
+
+        /* ==========================================================================
+   9. BRAND COMPONENT CAROUSEL HEADER SEPARATORS
+   ========================================================================== */
+        .product-header {
+            display: flex;
+            align-items: center;
+            /* Perfectly references cross lines and targets layout grid systems on equal center lines */
+            text-align: center;
+        }
+
+        /* Sleek geometric layout lines branching outwards from headers text boundaries */
+        .product-header::before,
+        .product-header::after {
+            content: '';
+            flex: 1;
+            /* Fluid spacing consumer dynamically spanning remaining structural box parameters widths */
+            border-bottom: 2px solid #000;
+        }
+
+        .product-title {
+            padding: 0 20px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 2rem;
+            margin: 0;
+            color: black;
+        }
+
+        /* Carousel dots component pagination interface modifiers overrides */
+        .custom-dots {
+            bottom: -50px;
+            /* Offsets alignment variables safe distances below sliding track layers */
+        }
+
+        .custom-dots button {
+            width: 12px !important;
+            height: 12px !important;
+            border-radius: 50% !important;
+            background-color: #ccc !important;
+            border: none !important;
+            margin: 0 5px !important;
+            transition: 0.3s;
+        }
+
+        /* Highlights the targeted tracking pagination active slides */
+        .custom-dots button.active {
+            background-color: #040404 !important;
+            transform: scale(1.2);
+            /* Active structural pop magnification effects signals clearly to user selections */
+        }
+
+        .product-slider img {
+            transition: transform 0.4s ease;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .product-slider img:hover {
+            transform: translateY(-10px);
+            /* Vertical dynamic displacement lifting effect layers over product listings images */
+        }
+
+        @media (max-width: 768px) {
+            .product-slider img {
+                margin-bottom: 15px;
+            }
+        }
+
+        /* ==========================================================================
+   10. BASE DEEP MATRIX FOOTER WRAPPER
+   ========================================================================== */
+        footer {
+            background: #050505;
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(197, 160, 89, 0.1);
+            /* Microscopic hair line top golden divider boundary marker */
+        }
+
+        .footer-title {
+            color: var(--gold);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        footer ul li {
+            font-family: 'Lora', serif;
+            color: #777;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            list-style: none;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        footer ul li:hover {
+            color: var(--gold);
+            padding-left: 5px;
+            /* Subtle sliding text indicator hint transitions on cursor overlays */
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-right: 20px;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.4s;
+        }
+
+        .social-icons a:hover {
+            color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        /* ==========================================================================
+   11. COMPACT VIEW CONSTRAINTS (SMALL VIEWPORT BOOTSTRAP OVERRIDES)
+   ========================================================================== */
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: rgba(0, 0, 0, 0.98);
+                padding: 2rem;
+                border: 1px solid rgba(197, 160, 89, 0.2);
+                /* Binds collapsed layout items inside clean glowing subtle gold box lines */
+            }
+
+            .nav-icons {
+                display: flex;
+                justify-content: center;
+                /* Centers footer icon tools when items wrap inside mobile drop matrix grids */
+                margin-top: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="follower">J. DECORS</div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">JD</a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navBox">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navBox">
+                <ul class="navbar-nav text-center">
+                    <li class="nav-item"><a class="nav-link" href="HOME.html">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ABOUT.html">ABOUT</a></li>
+                    <li class="nav-item" id="shopBtn"><a class="nav-link" href="SHOP.html">SHOP</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">CONTACT</a></li>
+                </ul>
+
+                <div class="nav-icons d-flex justify-content-center">
+                    <a href="login.html"><i class="far fa-user"></i></a>
+                    <a href="#"><i class="far fa-envelope"></i></a>
+                    <a href="#"><i class="fas fa-shopping-cart"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mega-menu" id="megaMenu">
+        <div class="container">
+            <div class="row g-4 text-center text-md-start">
+
+                <div class="col-6 col-lg-2">
+                    <h2 class="menu-title">METAL WALL ART</h2>
+                    <ul class="menu-list">
+                        <li>IKEA</li>
+                        <li>INTERWOOD</li>
+                        <li>WOODMASTER</li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h2 class="menu-title">PHOTO FRAME ART</h2>
+                    <ul class="menu-list">
+                        <li>IKEA</li>
+                        <li>INTERWOOD</li>
+                        <li>WOODMASTER</li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h2 class="menu-title">WALL SHELVES</h2>
+                    <ul class="menu-list">
+                        <li>IKEA</li>
+                        <li>INTERWOOD</li>
+                        <li>WOODMASTER</li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h2 class="menu-title">MIRROR ART</h2>
+                    <ul class="menu-list">
+                        <li>IKEA</li>
+                        <li>INTERWOOD</li>
+                        <li>WOODMASTER</li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h2 class="menu-title">WALL PAPERS</h2>
+                    <ul class="menu-list">
+                        <li>IKEA</li>
+                        <li>INTERWOOD</li>
+                        <li>WOODMASTER</li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-lg-2">
+                    <h2 class="menu-title">ANIMAL ART</h2>
+                    <ul class="menu-list">
+                        <li>IKEA</li>
+                        <li>INTERWOOD</li>
+                        <li>WOODMASTER</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <section class="about-page-banner">
+        <div class="banner-overlay">
+            <div class="container text-center">
+                <h1 class="about-heading">A B O U T &nbsp; U S</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-content">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="col-lg-6">
+                    <div class="about-text-box">
+                        <h2>
+                            <i class="fas fa-paint-brush" style="color: var(--gold); font-size: 1.5rem;"></i>
+                            Redefine Your Living Spaces
+                        </h2>
+                        <p>
+                            At <span style="color: var(--gold); font-weight: bold;">Jensen Wall Decor</span>, we believe
+                            every wall tells a story. Our premium range of wall décor items transforms dull spaces into
+                            captivating experiences.
+                        </p>
+                        <p>
+                            From <span class="highlight-text">luxurious wallpapers</span> to
+                            <span class="highlight-text">artistic frames, mirrors, and modern wall art</span>, we bring
+                            you designs that spark creativity and elegance. Whether you want a minimalistic look or a
+                            bold statement piece, our collection is crafted to complement your lifestyle.
+                        </p>
+                        <p>
+                            <i class="fas fa-sparkles" style="color: var(--gold);"></i>
+                            <strong>Over 10,000+ happy customers worldwide.</strong> Trusted for quality, durability,
+                            and timeless designs.
+                        </p>
+                        <a href="#" class="btn-explore">EXPLORE NOW <i class="fas fa-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="about-image-container">
+                        <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&q=80&w=1000"
+                            alt="JD Interior Design">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="jenson-intro-section">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="col-lg-5">
+                    <div class="intro-img-wrapper">
+                        <img src="imag/heading 2.webp" alt="Interior Design" class="img-fluid">
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="intro-content">
+                        <h2 class="intro-title">Jenson Decors</h2>
+                        <div class="title-underline"></div>
+
+                        <p>
+                            At Jenson Decors, we believe in transforming spaces into captivating reflections of our
+                            clients' dreams and personalities. We are more than just a décor company; we are creators of
+                            ambiance, curators of style, and architects of comfort.
+                        </p>
+                        <p>
+                            With years of expertise in the realm of interior design, Jenson Decors brings a unique blend
+                            of creativity, innovation, and functionality to every project we undertake. Whether it's
+                            reviving the soul of a living room, rejuvenating the heart of a commercial space, or
+                            reimagining the essence of an entire residence, our team of passionate designers and
+                            artisans are dedicated to crafting bespoke environments that inspire, energize, and enchant.
+                        </p>
+                        <p>
+                            Our approach is rooted in collaboration and customization. We take the time to understand
+                            our
+                            clients' visions, aspirations, and lifestyles, translating them into personalized designs
+                            that exceed expectations.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="banner-cta">
+        <div class="banner-overlay">
+            <div class="container text-center">
+                <span class="brand-subtitle">Jenson Decors</span>
+                <h2 class="banner-heading">Unique, stylish, and <br> affordable pieces</h2>
+                <a href="#" class="btn-shop">Shop Home Decors</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-section py-5">
+        <div class="container">
+            <div class="product-header mb-5">
+                <h2 class="product-title">Products</h2>
+            </div>
+
+            <div id="productCarousel" class="carousel slide product-slider" data-bs-ride="carousel">
+                <div class="carousel-indicators custom-dots">
+                    <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0"
+                        class="active"></button>
+                    <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="2"></button>
+                </div>
+
+                <div class="carousel-inner">
+
+                    <div class="carousel-item active">
+                        <div class="row g-3">
+                            <div class="col-md-3"><img src="imag/2.2.webp" class="img-fluid rounded" alt="Product 1">
+                            </div>
+                            <div class="col-md-3"><img src="imag/3.3.webp" class="img-fluid rounded" alt="Product 2">
+                            </div>
+                            <div class="col-md-3"><img src="imag/4.4.webp" class="img-fluid rounded" alt="Product 3">
+                            </div>
+                            <div class="col-md-3"><img src="imag/5.5.webp" class="img-fluid rounded" alt="Product 4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="row g-3">
+                            <div class="col-md-3"><img src="imag/6.6.webp" class="img-fluid rounded" alt="Product 5">
+                            </div>
+                            <div class="col-md-3"><img src="imag/7.7.webp" class="img-fluid rounded" alt="Product 6">
+                            </div>
+                            <div class="col-md-3"><img src="imag/8.8.webp" class="img-fluid rounded" alt="Product 7">
+                            </div>
+                            <div class="col-md-3"><img src="imag/9.9.jpg" class="img-fluid rounded" alt="Product 8">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br>
+
+    <footer>
+        <div class="container">
+            <div class="row g-5 text-center text-md-start">
+
+                <div class="col-6 col-md-3">
+                    <h6 class="footer-title">PAGES</h6>
+                    <ul class="p-0">
+                        <li>Home</li>
+                        <li>Shop</li>
+                        <li>Privacy</li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-md-3">
+                    <h6 class="footer-title">CATEGORIES</h6>
+                    <ul class="p-0">
+                        <li>Metal Art</li>
+                        <li>Mirror Art</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3">
+                    <h6 class="footer-title">PAYMENTS</h6>
+                    <ul class="p-0">
+                        <li>Easy Paisa</li>
+                        <li>Jazz Cash</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3">
+                    <h6 class="footer-title">FOLLOW US</h6>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const shopBtn = document.getElementById('shopBtn');
+        const megaMenu = document.getElementById('megaMenu');
+
+        shopBtn.addEventListener('click', (e) => {
+            megaMenu.classList.toggle('show-mega');
+            e.stopPropagation();
+        });
+
+        window.onclick = (e) => {
+            if (!megaMenu.contains(e.target) && e.target !== shopBtn) {
+                megaMenu.classList.remove('show-mega');
+            }
+        };
+
+        const follower = document.getElementById('follower');
+
+        // Mouse movement track karne ke liye
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+
+            // requestAnimationFrame use karne se movement smooth ho jati hai
+            window.requestAnimationFrame(() => {
+                follower.style.left = `${x}px`;
+                follower.style.top = `${y}px`;
+            });
+        });
+
+        // Jab mouse screen se bahar jaye to hide kar do
+        document.addEventListener('mouseleave', () => {
+            follower.style.opacity = '0';
+        });
+
+        document.addEventListener('mouseenter', () => {
+            follower.style.opacity = '1';
+        });
+    </script>
+</body>
+
+</html>

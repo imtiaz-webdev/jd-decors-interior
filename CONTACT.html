@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>contact us</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #c5a059;
+            --dark: #000;
+            --light-bg: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+            color: #333;
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        /* Custom Mouse Follower - Smooth Version */
+        #follower {
+            width: 120px;
+            height: 120px;
+            border: 1px solid #d4af37;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            /* Bohat zaroori hai taake buttons click ho sakein */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #d4af37;
+            letter-spacing: 2px;
+            z-index: 9999;
+            /* Smoothness ke liye ye transitions add ki hain */
+            transition: transform 0.15s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.3s ease;
+            transform: translate(-50%, -50%);
+            /* background: rgba(0, 0, 0, 0.05); */
+            backdrop-filter: blur(1px);
+            left: -200px;
+            /* Shuru mein screen se bahar */
+        }
+
+        /* Default cursor ko hide karne ke liye (Optional) */
+        body,
+        a,
+        button {
+            cursor: auto;
+            /* Ya 'none' kar dein agar bilkul hide karna hai */
+        }
+
+       
+
+        /* NAVBAR  */
+        .navbar {
+            background: rgb(8, 8, 8);
+            padding: 1.5rem 0;
+            z-index: 2500;
+
+        }
+
+        .navbar-brand {
+            font-size: 2rem;
+            color: var(--gold) !important;
+            letter-spacing: 4px;
+            font-weight: 700;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28197, 160, 89, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+        }
+
+        .nav-link {
+            color: #fff !important;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin: 0 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--gold) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-icons a {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-left: 1.5rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-icons a:hover {
+            color: var(--gold);
+            transform: scale(1.3) rotate(5deg);
+        }
+
+        /* MEGA MENU ANIMATION */
+        .mega-menu {
+            position: fixed;
+            top: -110%;
+            left: 0;
+            width: 100%;
+            height: auto;
+            background: rgba(0, 0, 0, 0.98);
+            z-index: 2000;
+            padding: 120px 0 60px;
+            transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            border-bottom: 1px solid var(--gold);
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        .mega-menu.show-mega {
+            top: 0;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .menu-title {
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .menu-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .menu-list li {
+            font-family: 'Lora', serif;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 10px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .menu-list li:hover {
+            color: var(--gold);
+            padding-left: 8px;
+        }
+
+        .mega-menu .col-lg-2 {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 0.6s;
+        }
+
+        .mega-menu.show-mega .col-lg-2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mega-menu.show-mega .col-lg-2:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .mega-menu.show-mega .col-lg-2:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        .mega-menu.show-mega .col-lg-2:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+
+        .mega-menu.show-mega .col-lg-2:nth-child(4) {
+            transition-delay: 0.4s;
+        }
+
+        .mega-menu.show-mega .col-lg-2:nth-child(5) {
+            transition-delay: 0.5s;
+        }
+
+        .mega-menu.show-mega .col-lg-2:nth-child(6) {
+            transition-delay: 0.6s;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-top: 213px;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            letter-spacing: 4px;
+            color: #b58d48;
+            font-weight: 400;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .page-title::before,
+        .page-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: clamp(100px, 20vw, 250px);
+            height: 1px;
+            background: var(--gold);
+            transform: translateY(-50%);
+        }
+
+        .page-title::before {
+            right: 100%;
+            margin-right: 1rem;
+        }
+
+        .page-title::after {
+            left: 100%;
+            margin-left: 1rem;
+        }
+
+        .form-wrapper {
+            background: rgba(15, 15, 15, 0.9);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow:  0 25px 50px rgba(0,0,0,0.5);
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .form-group:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .form-group:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .form-group:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .form-group:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .form-label {
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: #b58d48;
+            margin-bottom: 0.8rem;
+            display: block;
+            font-family: 'Cinzel', serif;
+        }
+
+        .form-control {
+            border: none;
+            border-bottom: 2px solid #b58d48;
+            border-radius: 0;
+            padding: 0.8rem 0;
+            font-size: 0.95rem;
+            background: transparent;
+            transition: all 0.3s ease;
+            color: #b58d48;
+        }
+
+        .form-control:focus {
+            background: transparent;
+            border-bottom-color: var(--gold);
+            box-shadow: none;
+            color: #b58d48;
+        }
+
+        .form-control::placeholder {
+            color: #b58d48;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            letter-spacing: 1.5px;
+            color: #b58d48;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #b58d48;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 0.8rem;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .radio-item input[type="radio"] {
+            cursor: pointer;
+            accent-color: var(--gold);
+            width: 18px;
+            height: 18px;
+        }
+
+        .radio-item label {
+            color: #b58d48;
+            cursor: pointer;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        textarea {
+            background: rgba(43, 43, 43, 0.9);
+            font-family: 'Lora', serif;
+            border: 2px solid #b58d48;
+            border-radius: 4px;
+            padding: 1rem;
+            resize: vertical;
+            min-height: 120px;
+            transition: all 0.3s ease;
+            color: #b58d48;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rg#b58d48;
+        }
+
+        textarea::placeholder {
+            color: #b58d48;
+        }
+
+        .form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #b58d48;
+        }
+
+        .btn-submit,
+        .btn-reset {
+            padding: 1rem 2rem;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 2px solid var(--gold);
+            font-family: 'Cinzel', serif;
+            white-space: nowrap;
+        }
+
+        .btn-submit {
+            background: var(--gold);
+            color: #000;
+        }
+
+        .btn-submit:hover {
+            background: transparent;
+            color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(197, 160, 89, 0.3);
+        }
+
+        .btn-reset {
+            background: transparent;
+            color: var(--gold);
+        }
+
+        .btn-reset:hover {
+            background: var(--gold);
+            color: #b58d48;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px ;
+        }
+
+
+        .success-message {
+            display: none;
+            background: #b58d48;
+            border: 1px solid #b58d48;
+            color: #b58d48;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: slideInDown 0.5s ease-out;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-header {
+                margin-top: 90px;
+            }
+
+            .form-wrapper {
+                padding: 1.5rem 1rem;
+            }
+
+            .page-title::before,
+            .page-title::after {
+                display: none;
+            }
+
+            .btn-submit,
+            .btn-reset {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.85rem;
+            }
+
+            .form-actions {
+                gap: 1rem;
+            }
+        }
+
+        /* CONTACT SECTION STYLES */
+        .section-header {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 250px;
+            height: 2px;
+            background-color: var(--gold);
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-item a {
+            text-decoration: none;
+            color: #0b0b0b;
+            font-family: 'Lora', serif;
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .contact-item a:hover {
+            color: var(--gold);
+            transform: translateX(10px);
+        }
+
+        .map-container {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #050505;
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(197, 160, 89, 0.1);
+        }
+
+        .footer-title {
+            color: var(--gold);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        footer ul li {
+            font-family: 'Lora', serif;
+            color: #777;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            list-style: none;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        footer ul li:hover {
+            color: var(--gold);
+            padding-left: 5px;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-right: 20px;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.4s;
+        }
+
+        .social-icons a:hover {
+            color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: rgba(0, 0, 0, 0.98);
+                padding: 2rem;
+                border: 1px solid rgba(197, 160, 89, 0.2);
+            }
+
+            .product-card img {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="follower">J. DECORS</div>
+
+    <!-- NAVBAR START -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">JD</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navBox">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navBox">
+                <ul class="navbar-nav text-center">
+                    <li class="nav-item"><a class="nav-link" href="HOME.html">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ABOUT.html">ABOUT</a></li>
+                    <li class="nav-item" id="shopBtn"><a class="nav-link" href="SHOP.html">SHOP</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">CONTACT</a></li>
+                </ul>
+                <div class="nav-icons d-flex justify-content-center">
+                    <a href="login.html"><i class="far fa-user"></i></a>
+                    <a href="#"><i class="far fa-envelope"></i></a>
+                    <a href="#"><i class="fas fa-shopping-cart"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="mega-menu" id="megaMenu">
+        <div class="container">
+            <div class="row g-4 text-center text-md-start">
+                <div class="col-6 col-lg-2">
+                    <h2 class="menu-title">METAL WALL ART</h2>
+                    <ul class="menu-list">
+                        <li>IKIA</li>
+                        <li>INTERWOOD</li>
+                        <li>WOODMASTER</li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h2 class="menu-title">PHOTO FRAME ART</h2>
+                    <ul class="menu-list">
+                        <li>IKIA</li>
+                        <li>INTERWOOD</li>
+                        <li>WOODMASTER</li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h2 class="menu-title">WALL SHELVES</h2>
+                    <ul class="menu-list">
+                        <li>IKIA</li>
+                        <li>INTERWOOD</li>
+                        <li>WOODMASTER</li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h2 class="menu-title">MIRROR ART</h2>
+                    <ul class="menu-list">
+                        <li>IKIA</li>
+                        <li>INTERWOOD</li>
+                        <li>WOODMASTER</li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h2 class="menu-title">WALL PAPERS</h2>
+                    <ul class="menu-list">
+                        <li>IKIA</li>
+                        <li>INTERWOOD</li>
+                        <li>WOODMASTER</li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h2 class="menu-title">ANIMAL ART</h2>
+                    <ul class="menu-list">
+                        <li>IKIA</li>
+                        <li>INTERWOOD</li>
+                        <li>WOODMASTER</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <h1 class="page-title">CREATE YOUR ACCOUNT</h1>
+    </div>
+
+    <!-- MAIN FORM -->
+    <div class="container">
+        <div class="success-message" id="successMessage">
+            ✓ Account created successfully! Welcome to J.DECORS
+        </div>
+
+        <form class="form-wrapper" id="accountForm">
+            <div class="row g-4 g-md-5">
+                <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                        <label class="form-label">FIRST NAME</label>
+                        <input type="text" class="form-control" placeholder="Enter your first name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">EMAIL</label>
+                        <input type="email" class="form-control" placeholder="Enter your email address" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">CONTACT NO</label>
+                        <input type="tel" class="form-control" placeholder="Enter your contact number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">ADDRESS</label>
+                        <input type="text" class="form-control" placeholder="Enter your full address" required>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-6">
+                                <label class="form-label">CITY</label>
+                                <input type="text" class="form-control" placeholder="City" required>
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <label class="form-label">STATE</label>
+                                <input type="text" class="form-control" placeholder="State" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN -->
+                <div class="col-12 col-lg-6">
+                    <!-- PROFILE SECTION -->
+                    <div class="section-title">PROFILE</div>
+
+                    <div class="row g-3 g-md-4 mb-4">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label class="form-label">AGE</label>
+                                <input type="number" class="form-control" placeholder="0" min="0" max="150">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label class="form-label">DOB</label>
+                                <input type="date" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GENDER SECTION -->
+                    <div class="form-group mb-4">
+                        <label class="form-label">GENDER</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="male" name="gender" value="male">
+                                <label for="male">MALE</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="female" name="gender" value="female">
+                                <label for="female">FEMALE</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FEEDBACK SECTION -->
+                    <div class="section-title">FEEDBACK</div>
+
+                    <div class="row g-3 g-md-4">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">HELP FULL</label>
+                                <textarea placeholder="Tell us what you loved..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">HELP NOT</label>
+                                <textarea placeholder="What could we improve..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FORM ACTIONS -->
+                <div class="col-12">
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">CREATE ACCOUNT</button>
+                        <button type="reset" class="btn-reset">CLEAR FORM</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <section class="contact-section container my-5 py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <h2 class="section-header">GET IN TOUCH</h2>
+                <div class="contact-links mt-4">
+                    <div class="contact-item">
+                        <a href="#"><i class="fab fa-facebook-square"></i> FOLLOW ON FACEBOOK</a>
+                    </div>
+                    <div class="contact-item">
+                        <a href="#"><i class="fab fa-whatsapp"></i> JOIN ON WHATSAPP</a>
+                    </div>
+                    <div class="contact-item">
+                        <a href="#"><i class="fab fa-twitter"></i> FOLLOW ON TWITTER</a>
+                    </div>
+                    <div class="contact-item">
+                        <a href="mailto:j.decors@gmail.com"><i class="fas fa-envelope"></i> J.DECORS@GMAIL.COM</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="map-container">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.025547690114!2d67.04353277595304!3d24.965239141054366!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb34089066601f7%3A0xc36769941198889!2sAptech%20Learning%20North%20Nazimabad%20II%20Center!5e0!3m2!1sen!2s!4v1715100000000!5m2!1sen!2s"
+                        width="100%" height="350" style="border:2px solid #c5a059;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FOOTER START -->
+    <footer>
+        <div class="container">
+            <div class="row g-5 text-center text-md-start">
+                <div class="col-6 col-md-3">
+                    <h6 class="footer-title">PAGES</h6>
+                    <ul class="p-0">
+                        <li>Home</li>
+                        <li>Shop</li>
+                        <li>Privacy</li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-3">
+                    <h6 class="footer-title">CATEGORIES</h6>
+                    <ul class="p-0">
+                        <li>Metal Art</li>
+                        <li>Mirror Art</li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="footer-title">PAYMENTS</h6>
+                    <ul class="p-0">
+                        <li>Easy Paisa</li>
+                        <li>Jazz Cash</li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="footer-title">FOLLOW US</h6>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const shopBtn = document.getElementById('shopBtn');
+        const megaMenu = document.getElementById('megaMenu');
+
+        shopBtn.addEventListener('click', (e) => {
+            megaMenu.classList.toggle('show-mega');
+            e.stopPropagation();
+        });
+
+        window.onclick = (e) => {
+            if (!megaMenu.contains(e.target) && e.target !== shopBtn) {
+                megaMenu.classList.remove('show-mega');
+            }
+        };
+
+        const follower = document.getElementById('follower');
+
+        // Mouse movement track karne ke liye
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+
+            // requestAnimationFrame use karne se movement smooth ho jati hai
+            window.requestAnimationFrame(() => {
+                follower.style.left = `${x}px`;
+                follower.style.top = `${y}px`;
+            });
+        });
+
+        // Jab mouse screen se bahar jaye to hide kar do
+        document.addEventListener('mouseleave', () => {
+            follower.style.opacity = '0';
+        });
+
+        document.addEventListener('mouseenter', () => {
+            follower.style.opacity = '1';
+        });
+    </script>
+</body>
+
+</html>

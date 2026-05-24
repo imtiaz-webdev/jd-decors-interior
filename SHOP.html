@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metal Art Shop — J. DECORS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --gold: #c5a059;
+            --dark: #080808;
+            --luxury-gold: #D39333;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background-color: #fcfcfc;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* ── MOUSE FOLLOWER ── */
+        #follower {
+            width: 120px;
+            height: 120px;
+            border: 1px solid #d4af37;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #d4af37;
+            letter-spacing: 2px;
+            z-index: 9999;
+            transition: left 0.12s cubic-bezier(0.23, 1, 0.32, 1),
+                top 0.12s cubic-bezier(0.23, 1, 0.32, 1);
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(1px);
+            left: -200px;
+            top: -200px;
+        }
+
+        body,
+        a,
+        button {
+            cursor: auto;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            background: rgb(8, 8, 8);
+            padding: 1.5rem 0;
+            z-index: 2500;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand {
+            font-size: 2rem;
+            color: var(--gold) !important;
+            letter-spacing: 4px;
+            font-weight: 700;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28197, 160, 89, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+        }
+
+        .nav-link {
+            color: #fff !important;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin: 0 12px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--gold) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-icons a {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-left: 1.5rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-icons a:hover {
+            color: var(--gold);
+            transform: scale(1.3) rotate(5deg);
+        }
+
+        /* ── PARALLAX BANNER ── */
+        .shop-page-banner {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIKpUikI6Qmiec5nBIO6IvV_Ylw3fWUTdepA&usqp=CAU');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: scroll;
+            /* JS takes over */
+            position: relative;
+            height: 80vh;
+            will-change: background-position;
+            overflow: hidden;
+        }
+
+        .banner-overlay {
+            background: rgba(0, 0, 0, 0.6);
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .shop-heading {
+            font-family: 'Cinzel', serif;
+            font-size: 5.5rem;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            color: goldenrod;
+            margin: 0;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        /* ── SEARCH BAR ── */
+        .search-container {
+            max-width: 600px;
+            margin: -30px auto 40px auto;
+            position: relative;
+            z-index: 2600;
+            padding: 0 15px;
+        }
+
+        .search-wrapper {
+            display: flex;
+            background: #111;
+            border: 2px solid var(--luxury-gold);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 25px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: 'Lora', serif;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: #888;
+        }
+
+        .search-btn {
+            background: transparent;
+            border: none;
+            color: var(--luxury-gold);
+            padding: 0 25px;
+            font-size: 1.2rem;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            color: #fff;
+            background: var(--luxury-gold);
+        }
+
+        /* ── NO RESULTS ── */
+        #noResultsMessage {
+            font-family: 'Cinzel', serif;
+            color: #888;
+            letter-spacing: 3px;
+            text-align: center;
+            padding: 60px 20px;
+            display: none;
+            font-size: 1rem;
+        }
+
+        /* ── CATEGORY BLOCK — hidden when all cards filtered out ── */
+        .category-block {
+            transition: opacity 0.3s;
+        }
+
+        .category-block.d-none-block {
+            display: none !important;
+        }
+
+        /* ── SECTION HEADINGS ── */
+        .card-heading {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            color: black;
+            letter-spacing: 5px;
+        }
+
+        /* ── PRODUCT CARDS ── */
+        /* BUG FIX: product-card-container must wrap col-md-4 so
+           display:none hides the whole column, not just inner HTML */
+        .product-card-container {
+            transition: opacity 0.3s ease;
+        }
+
+        .card-top {
+            position: relative;
+            margin-bottom: 30px;
+            height: 390px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .card-border {
+            border: 2px solid #D39333;
+            width: 98%;
+            height: 90%;
+            position: relative;
+            padding: 15px;
+            transition: 0.3s all;
+        }
+
+        .card-image {
+            width: 90%;
+            height: 105%;
+            position: absolute;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s transform;
+        }
+
+        .card-bottom {
+            display: flex;
+            justify-content: space-around;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 25px;
+            padding: 5px;
+            margin-top: 10px;
+            color: black;
+        }
+
+        .card-price {
+            color: #D39333;
+        }
+
+        /* ── CARD HOVER OVERLAY ── */
+        .card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: 0.5s height ease;
+            overflow: hidden;
+            backdrop-filter: blur(3px);
+        }
+
+        .card-top:hover .card-overlay {
+            height: 100%;
+        }
+
+        .card-top:hover img {
+            transform: scale(1.1);
+        }
+
+        .cvd {
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid #DBB86C;
+            color: #DBB86C;
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            transition: 0.3s;
+            height: 46px;
+            display: flex;
+            align-items: center;
+        }
+
+        .cvd:hover {
+            background: #DBB86C;
+            color: #000;
+        }
+
+        .icons {
+            display: inline-flex;
+            gap: 25px;
+        }
+
+        .cart-icon-btn {
+            margin-top: 15px;
+            color: #DBB86C;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border: solid 1px #DBB86C;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        .cart-icon-btn:hover {
+            background: #DBB86C;
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            .shop-heading {
+                font-size: 2.5rem;
+                letter-spacing: 5px;
+            }
+
+            .card-heading {
+                font-size: 2rem;
+            }
+
+            .card-top {
+                height: 350px;
+            }
+        }
+
+        /* ==========================================================================
+   10. BASE DEEP MATRIX FOOTER WRAPPER
+   ========================================================================== */
+        footer {
+            background: #050505;
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(197, 160, 89, 0.1);
+            /* Microscopic hair line top golden divider boundary marker */
+        }
+
+        .footer-title {
+            color: var(--gold);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        footer ul li {
+            font-family: 'Lora', serif;
+            color: #777;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            list-style: none;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        footer ul li:hover {
+            color: var(--gold);
+            padding-left: 5px;
+            /* Subtle sliding text indicator hint transitions on cursor overlays */
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-right: 20px;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.4s;
+        }
+
+        .social-icons a:hover {
+            color: var(--gold);
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="follower">J. DECORS</div>
+
+    <!-- ============ NAVBAR START ============ -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">JD</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navBox">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navBox">
+                <ul class="navbar-nav text-center">
+                    <li class="nav-item"><a class="nav-link" href="HOME.html">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ABOUT.html">ABOUT</a></li>
+                    <li class="nav-item"><a class="nav-link" href="SHOP.html">SHOP</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">CONTACT</a></li>
+                </ul>
+                <div class="nav-icons d-flex justify-content-center">
+                    <a href="login.html"><i class="far fa-user"></i></a>
+                    <a href="#"><i class="far fa-envelope"></i></a>
+                    <a href="#"><i class="fas fa-shopping-cart"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- ============ NAVBAR END ============ -->
+
+    <!-- ============ PARALLAX BANNER ============ -->
+    <section class="shop-page-banner" id="parallaxBanner">
+        <div class="banner-overlay">
+            <div class="container text-center">
+                <h1 class="shop-heading">SHOP</h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ SEARCH BAR ============ -->
+    <div class="search-container">
+        <div class="search-wrapper">
+            <input type="text" id="productSearch" class="search-input"
+                placeholder="Search: Mirror, Horse, Islamic, Frame, Wall Paper..." autocomplete="off">
+            <button class="search-btn" id="searchBtn">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- No Results Notice -->
+    <div id="noResultsMessage">NO PRODUCTS FOUND — TRY A DIFFERENT KEYWORD</div>
+
+    <!-- ============================================================
+         PRODUCTS
+         Every col-md-4 is wrapped in div.product-card-container
+         with data-keywords="..." so the search JS can find & filter it.
+         Each category group is wrapped in div.category-block so the
+         entire section (heading + grid) hides when empty.
+    ============================================================ -->
+
+    <!-- ── METAL WALL ART ── -->
+    <div class="category-block" id="cat-metal">
+        <div class="card-heading">METAL WALL ART</div>
+        <section class="products">
+            <div class="container">
+                <div class="row">
+
+                    <div class="product-card-container col-md-4" data-keywords="horse art metal wall">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image">
+                                    <img src="imag/3.3.webp" alt="Horse Art">
+                                    <div class="card-overlay">
+                                        <a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="icons">
+                                            <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                    class="fa-solid fa-cart-shopping"></i></div>
+                                            <div class="cart-icon-btn" onclick="alert('Enquiry sent!')"><i
+                                                    class="fa-solid fa-envelope"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">HORSE ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card-container col-md-4" data-keywords="eye art metal wall">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image">
+                                    <img src="imag/BEST.jpg" alt="Eye Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">EYE ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card-container col-md-4" data-keywords="heart art metal wall">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image">
+                                    <img src="imag/pexels-photo-5490341.webp" alt="Heart Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">HEART ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card-container col-md-4" data-keywords="bike art metal wall">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image">
+                                    <img src="imag/metal wall art.png" alt="Bike Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">BIKE ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card-container col-md-4" data-keywords="bed room art metal wall bedroom">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image">
+                                    <img src="imag/8.8.webp" alt="Bed Room Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">BED ROOM ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card-container col-md-4" data-keywords="hand art metal wall">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image">
+                                    <img src="imag/9.9.jpg" alt="Hand Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">HAND ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card-container col-md-4" data-keywords="islamic art metal wall">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image">
+                                    <img src="imag/BANNER CTI.webp" alt="Islamic Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">ISLAMIC ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card-container col-md-4" data-keywords="name art metal wall">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image">
+                                    <img src="imag/pexels-photo-5490341.webp" alt="Name Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">NAME ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+
+                    <div class="product-card-container col-md-4" data-keywords="metal art wall">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image">
+                                    <img src="imag/wall shevels1.jpeg" alt="Metal Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">METAL ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ── WALL PAPERS ── -->
+    <div class="category-block" id="cat-wallpaper">
+        <div class="card-heading">WALL PAPERS</div>
+        <section class="products">
+            <div class="container">
+                <div class="row">
+
+                    <div class="product-card-container col-md-4" data-keywords="wall papers wallpaper paper">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/metal wall art.png" alt="Wall Paper">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL PAPERS</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall papers wallpaper paper">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/7.7.webp" alt="Wall Paper">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL PAPERS</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall papers wallpaper paper">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/i.webp" alt="Wall Paper">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL PAPERS</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall papers wallpaper paper">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/6.6.webp" alt="Wall Paper">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL PAPERS</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall papers wallpaper paper">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/4.4.webp" alt="Wall Paper">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL PAPERS</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall papers wallpaper paper">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/2.2.webp" alt="Wall Paper">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+        </section>
+    </div>
+
+    <!-- ── PHOTO FRAME ART ── -->
+    <div class="category-block" id="cat-frame">
+        <div class="card-heading">PHOTO FRAME ART</div>
+        <section class="products">
+            <div class="container">
+                <div class="row">
+
+                    <div class="product-card-container col-md-4" data-keywords="photo frame art picture">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/5.5.webp" alt="Photo Frame">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">PHOTO FRAME ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="photo frame art picture">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/BEST.jpg" alt="Photo Frame">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">PHOTO FRAME ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="photo frame art picture">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/BEST2.jpg" alt="Photo Frame">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">PHOTO FRAME ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="photo frame art picture">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/heading 2.webp" alt="Photo Frame">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">PHOTO FRAME ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="photo frame art picture">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/9.9.jpg" alt="Photo Frame">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">PHOTO FRAME ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="photo frame art picture">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/8.8.webp" alt="Photo Frame">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">PHOTO FRAME ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+
+        </section>
+    </div>
+
+    <!-- ── MIRROR ART ── -->
+    <div class="category-block" id="cat-mirror">
+        <div class="card-heading">MIRROR ART</div>
+        <section class="products">
+            <div class="container">
+                <div class="row">
+
+                    <div class="product-card-container col-md-4" data-keywords="mirror art">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/3.3.webp" alt="Mirror Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">MIRROR ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="mirror art">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/1cb26c4b7cb2cd19d864ee4dacde9b37.jpg"
+                                        alt="Mirror Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">MIRROR ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="mirror art">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/2.2.webp" alt="Mirror Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">MIRROR ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="mirror art">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/2.jpg" alt="Mirror Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">MIRROR ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="mirror art">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/4.4.webp" alt="Mirror Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">MIRROR ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="mirror art">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/6.6.webp" alt="Mirror Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">MIRROR ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="mirror art">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/8.8.webp" alt="Mirror Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">MIRROR ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="mirror art">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/heading 2.webp" alt="Mirror Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">MIRROR ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="mirror art">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/BEST.jpg" alt="Mirror Art">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">MIRROR ART</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ── WALL SHELVES ── -->
+    <div class="category-block" id="cat-shelves">
+        <div class="card-heading">WALL SHELVES</div>
+        <section class="products">
+            <div class="container">
+                <div class="row">
+
+                    <div class="product-card-container col-md-4" data-keywords="wall shelves shelf">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/6.6.webp" alt="Wall Shelf">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL SHELVES</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall shelves shelf">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/4.4.webp" alt="Wall Shelf">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL SHELVES</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall shelves shelf">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/mirror2.PNG" alt="Wall Shelf">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL SHELVES</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall shelves shelf">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/BEST2.jpg" alt="Wall Shelf">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL SHELVES</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall shelves shelf">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/wall shevels1.jpeg" alt="Wall Shelf">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL SHELVES</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall shelves shelf">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/wall shelf.jpg" alt="Wall Shelf">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL SHELVES</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+        </section>
+    </div>
+
+    <!-- ── WALL MOUNTED ANIMALS ── -->
+    <div class="category-block" id="cat-animals">
+        <div class="card-heading">WALL MOUNTED ANIMALS</div>
+        <section class="products">
+            <div class="container">
+                <div class="row">
+
+                    <div class="product-card-container col-md-4" data-keywords="wall mounted animals animal">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/metal wall art.png" alt="Animal Mounted">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL MOUNTED ANIMALS</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall mounted animals animal">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/photo fram art.PNG" alt="Animal Mounted">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL MOUNTED ANIMALS</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall mounted animals animal">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/animal mounted1.jpg" alt="Animal Mounted">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL MOUNTED ANIMALS</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall mounted animals animal">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/5.5.webp" alt="Animal Mounted">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL MOUNTED ANIMALS</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall mounted animals animal">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/3.3.webp" alt="Animal Mounted">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL MOUNTED ANIMALS</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+                    <div class="product-card-container col-md-4" data-keywords="wall mounted animals animal">
+                        <div class="card-top">
+                            <div class="card-border">
+                                <div class="card-image"><img src="imag/9.9.jpg" alt="Animal Mounted">
+                                    <div class="card-overlay"><a href="#" class="cvd">VIEW DETAILS</a>
+                                        <div class="cart-icon-btn" onclick="alert('Added to cart!')"><i
+                                                class="fa-solid fa-cart-shopping"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-name">WALL MOUNTED ANIMALS</div>
+                            <div class="card-price">4000 Rs</div>
+                        </div>
+                    </div>
+
+        </section>
+    </div>
+
+    <div style="height:80px;"></div>
+
+    <footer>
+        <div class="container">
+            <div class="row g-5 text-center text-md-start">
+
+                <div class="col-6 col-md-3">
+                    <h6 class="footer-title">PAGES</h6>
+                    <ul class="p-0">
+                        <li>Home</li>
+                        <li>Shop</li>
+                        <li>Privacy</li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-md-3">
+                    <h6 class="footer-title">CATEGORIES</h6>
+                    <ul class="p-0">
+                        <li>Metal Art</li>
+                        <li>Mirror Art</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3">
+                    <h6 class="footer-title">PAYMENTS</h6>
+                    <ul class="p-0">
+                        <li>Easy Paisa</li>
+                        <li>Jazz Cash</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3">
+                    <h6 class="footer-title">FOLLOW US</h6>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- ============================================================
+         ALL CUSTOM JS lives in a SEPARATE <script> block — no src.
+    ============================================================ -->
+    <script>
+
+        /* ── 1. MOUSE FOLLOWER ──────────────────────────────────────
+           Moves the gold circle to the cursor on every mousemove.
+           CSS transition on left/top creates the smooth chase lag.
+        ──────────────────────────────────────────────────────────── */
+        const follower = document.getElementById('follower');
+        window.addEventListener('mousemove', (e) => {
+            follower.style.left = e.clientX + 'px';
+            follower.style.top = e.clientY + 'px';
+        });
+
+
+        /* ── 2. PARALLAX BANNER ─────────────────────────────────────
+           On every scroll event, shift banner background-position-y
+           by scrollY × 0.4 so the image moves slower than the page.
+           requestAnimationFrame batches paint calls for 60fps smoothness.
+        ──────────────────────────────────────────────────────────── */
+        const banner = document.getElementById('parallaxBanner');
+        let rafQueued = false;
+
+        window.addEventListener('scroll', () => {
+            if (!rafQueued) {
+                rafQueued = true;
+                requestAnimationFrame(() => {
+                    banner.style.backgroundPositionY = (window.pageYOffset * 0.4) + 'px';
+                    rafQueued = false;
+                });
+            }
+        }, { passive: true });
+
+
+        /* ── 3. LIVE SEARCH ENGINE ──────────────────────────────────
+           HOW IT WORKS:
+           - Every product column has class="product-card-container"
+             and data-keywords="lowercase keywords here".
+           - Every category section has class="category-block".
+           - On each keystroke we:
+             a) Lowercase + trim the query.
+             b) Show/hide each .product-card-container by checking
+                if its data-keywords contains the query string.
+             c) After filtering cards, check each .category-block —
+                if ALL its cards are hidden, hide the whole block too.
+             d) If zero cards match across all blocks, show #noResultsMessage.
+
+           BUG THAT WAS IN THE ORIGINAL CODE:
+           The JS was placed INSIDE <script src="bootstrap...">
+           which means it was NEVER executed. Also, the HTML cards
+           were missing class="product-card-container" and
+           data-keywords attributes, so the selectors found nothing.
+        ──────────────────────────────────────────────────────────── */
+        const searchInput = document.getElementById('productSearch');
+        const noResultsMessage = document.getElementById('noResultsMessage');
+        const allCards = document.querySelectorAll('.product-card-container');
+        const allCategories = document.querySelectorAll('.category-block');
+
+        function runSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            let totalVisible = 0;
+
+            /* Step 1 — show/hide individual product cards */
+            allCards.forEach(card => {
+                const keywords = card.getAttribute('data-keywords') || '';
+                const isMatch = query === '' || keywords.includes(query);
+                card.style.display = isMatch ? '' : 'none';
+                if (isMatch) totalVisible++;
+            });
+
+            /* Step 2 — hide category block if it has zero visible cards */
+            allCategories.forEach(block => {
+                const visibleInBlock = block.querySelectorAll(
+                    '.product-card-container:not([style*="display: none"])'
+                ).length;
+                block.style.display = (query !== '' && visibleInBlock === 0) ? 'none' : '';
+            });
+
+            /* Step 3 — show "no results" message if nothing matched */
+            noResultsMessage.style.display = (totalVisible === 0 && query !== '') ? 'block' : 'none';
+        }
+
+        /* Trigger on every keystroke */
+        searchInput.addEventListener('input', runSearch);
+
+        /* Also trigger when the search button is clicked */
+        document.getElementById('searchBtn').addEventListener('click', runSearch);
+
+    </script>
+
+</body>
+
+</html>
