@@ -4,14 +4,9 @@ A fully responsive, luxury interior design and home decor e-commerce front-end w
 
 ---
 
-## 📸 Website Screenshots
-
-### Hero Section
 ![Hero Section](./screenshots/preview.png.jpg)
 
-### Product Showcase & Collections
-![Product Section](./screenshots/preview1.png)
-
+![Product Showcase](./screenshots/preview1.png)
 ---
 
 ## ✨ Features
