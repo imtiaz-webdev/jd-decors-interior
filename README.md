@@ -2,9 +2,9 @@
 
 A fully responsive, luxury interior design and home decor e-commerce front-end website developed as an **Aptech eProject**.
 
-![Hero Section](screenshots/preview.png.jpg)
+<img src="screenshots/preview.png.jpg" width="100%" alt="Hero Section">
 
-![Product Showcase](screenshots/preview1.png)
+<img src="screenshots/preview1.png" width="100%" alt="Product Showcase">
 
 
 ## ✨ Features
