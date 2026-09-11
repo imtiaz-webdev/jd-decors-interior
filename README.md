@@ -2,7 +2,9 @@
 # JD Decors - Modern Interior & Home Furnishing Website
 
 A fully responsive, luxury interior design and home decor e-commerce front-end website developed as an **Aptech eProject**.
-![Uploading preview.png.jpg.png…]()
+
+<img width="1366" height="642" alt="preview png jpg" src="https://github.com/user-attachments/assets/4d738749-8a90-4517-8965-fbe732bdcfd0" />
+
 
 <img width="415" height="649" alt="preview1 png" src="https://github.com/user-attachments/assets/2b316e98-edb8-429a-9217-89af86d8870a" />
 
